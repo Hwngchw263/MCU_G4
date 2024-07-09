@@ -42,27 +42,27 @@ uint8_t ParseMessage(Message *msg) {
 
     	//create data field to store 4 next character
     	char second[5];
-
+    	char third[3];
     	//function to store character to first and second
     	substring(p, first, 0, 2);
     	substring(p, second, 2, 4);
-
+    	substring(p,third,6,2);
     	//function to convert string to hex then typecast to char
 		char type  =  (char)StrtoHex(first,2);
 
 		//function to convert string to hex then typecast to uint16_t
 		uint16_t data = (uint16_t)StrtoHex(second,4);
-
+		uint8_t checksumstr = (uint8_t)StrtoHex(third,2);
 		//pass type,data to msg to create msg
 		*msg = createMessage(type,data);
 
-		//local var , don't care
-		uint8_t test = VerifyMessage(msg);
+
 
 		//check if checksum is right or not
-		if(VerifyMessage(msg)){
+		if(msg->checksum == checksumstr){
 			//reset num
 			if(msg->type == 'R'){
+				play =0;
               num =0;
 			}
 			//wrong, need to resent form mcu to pc
@@ -72,7 +72,12 @@ uint8_t ParseMessage(Message *msg) {
 			}
 			//on off led , odd : off , even :on
 			else if(msg->type == 'O'){
-				play = ~play;
+				if(msg->data == 1){
+					play =1;
+				}
+				else {
+					play = 0;
+				}
 			}
 			return 1;
 		}
@@ -142,6 +147,11 @@ void ADC0_IRQHandler(void)
 			messageToHexString(&a,buffer);
 			//Send message to PC
 			UART1_SendString(buffer);
+			//save previous string
+			for(int id = 0; id < 8; id++){
+				temp_str[id] = buffer[id];
+			}
+
 			//Save previous value
 			previous_volume_value = volume_value;
 			}
@@ -154,6 +164,9 @@ void ADC0_IRQHandler(void)
 			messageToHexString(&a,buffer);
 			//Send message to PC
 			UART1_SendString(buffer);
+			for(int id = 0; id < 8; id++){
+				temp_str[id] = buffer[id];
+			}
 			//Save previous value
 			previous_volume_value = volume_value;
 			}
