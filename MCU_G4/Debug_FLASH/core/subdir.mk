@@ -4,13 +4,16 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../core/Core_NVIC.c 
+../core/Core_NVIC.c \
+../core/Core_Systick.c 
 
 OBJS += \
-./core/Core_NVIC.o 
+./core/Core_NVIC.o \
+./core/Core_Systick.o 
 
 C_DEPS += \
-./core/Core_NVIC.d 
+./core/Core_NVIC.d \
+./core/Core_Systick.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

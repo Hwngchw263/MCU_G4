@@ -10,7 +10,7 @@
 #include "stdbool.h"
 #include<string.h>
 #include <stdio.h>
-
+#define MESSAGE_LENGTH  8
 #define Hex_Error		16
 typedef struct {
     char type;
@@ -18,9 +18,14 @@ typedef struct {
     uint8_t checksum;
 } Message;
 
+//Function to sub string
+void substring(const char* source, char* dest, int start, int length);
+// Function to calculate checksum
 uint8_t calculateChecksum( uint16_t data);
+// Function to create message
 Message createMessage(char type, uint16_t data);
-void messageToString(Message *msg, char *str);
+// Function to convert Message to string
+void messageToHexString(Message *msg, char *str);
 
 
 #endif /* MESSAGE_H_ */

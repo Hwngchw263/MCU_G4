@@ -11,9 +11,11 @@
 "./Project_Settings/Startup_Code/startup_S32K144.o"
 "./Project_Settings/Startup_Code/system_S32K144.o"
 "./core/Core_NVIC.o"
+"./core/Core_Systick.o"
 "./drivers/Driver_ADC.o"
 "./drivers/Driver_GPIO.o"
 "./drivers/Driver_UART.o"
-"./middleware/Message.o"
+"./middleware/Middleware.o"
+"./src/Message.o"
 "./src/main.o"
 -lm
