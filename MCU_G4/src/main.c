@@ -182,8 +182,10 @@ void PORTC_IRQHandler(void)
         {
             buttonPressed = 1;
             timerCounter = 0;
-            LPIT0->TMR[0].TVAL = 24000000; // Reset timer value
-            LPIT0->TMR[0].TCTRL |= LPIT_TMR_TCTRL_T_EN_MASK; // Enable timer
+			Reset_timer_value(LPIT_TIMER_CHANNEL0,24000000);
+			Start_timer(LPIT_TIMER_CHANNEL0);
+            //LPIT0->TMR[0].TVAL = 24000000; // Reset timer value
+            //LPIT0->TMR[0].TCTRL |= LPIT_TMR_TCTRL_T_EN_MASK; // Enable timer
         } else
         {
             buttonPressed = 0;
@@ -202,7 +204,8 @@ void PORTC_IRQHandler(void)
 					temp_str[id] = buffer[id];
 				}
             }
-			LPIT0->TMR[0].TCTRL &= ~LPIT_TMR_TCTRL_T_EN_MASK; // Disable timer
+			Stop_timer(LPIT_TIMER_CHANNEL0)	;
+			//LPIT0->TMR[0].TCTRL &= ~LPIT_TMR_TCTRL_T_EN_MASK; // Disable timer
         }
         PORTC->ISFR |= (1 << 12); // Clear interrupt flag
     }
@@ -213,8 +216,10 @@ void PORTC_IRQHandler(void)
         {
             buttonPressed = 1;
             timerCounter = 0;
-            LPIT0->TMR[0].TVAL = 24000000; // Reset timer value
-            LPIT0->TMR[0].TCTRL |= LPIT_TMR_TCTRL_T_EN_MASK; // Enable timer
+			Reset_timer_value(LPIT_TIMER_CHANNEL0,24000000);
+			Start_timer(LPIT_TIMER_CHANNEL0);
+            // LPIT0->TMR[0].TVAL = 24000000; // Reset timer value
+            // LPIT0->TMR[0].TCTRL |= LPIT_TMR_TCTRL_T_EN_MASK; // Enable timer
         } else
         {
             buttonPressed = 0;
@@ -233,7 +238,8 @@ void PORTC_IRQHandler(void)
 					temp_str[id] = buffer[id];
 				}
             }
-			LPIT0->TMR[0].TCTRL &= ~LPIT_TMR_TCTRL_T_EN_MASK; // Disable timer
+			Stop_timer(LPIT_TIMER_CHANNEL0)	;
+			//LPIT0->TMR[0].TCTRL &= ~LPIT_TMR_TCTRL_T_EN_MASK; // Disable timer
         }
         PORTC->ISFR |= (1 << 13); // Clear interrupt flag
     }
@@ -274,7 +280,8 @@ void LPIT0_Ch0_IRQHandler(void) {
         }
     	PORTC->ISFR |= (1 << 13);
         buttonPressed = 1;
-        LPIT0->TMR[0].TCTRL &= ~LPIT_TMR_TCTRL_T_EN_MASK; // Disable timer
+		Stop_timer(LPIT_TIMER_CHANNEL0)	;
+        //LPIT0->TMR[0].TCTRL &= ~LPIT_TMR_TCTRL_T_EN_MASK; // Disable timer
     }
     LPIT0->MSR |= LPIT_MSR_TIF0_MASK; // Clear interrupt flag
 }
@@ -292,7 +299,7 @@ int main(void) {
 	LED_Init();
 	SysTick_Init();
 	Button_Init();
-	Timer_Init();
+	LPIT_Timer_Init(LPIT_TIMER_CHANNEL0);
 	ADC_Init(ADC0,External_Chanel12);
 	while(1){
 		if(messageReceived){
