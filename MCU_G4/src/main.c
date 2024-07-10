@@ -6,7 +6,7 @@
 // Global variables
 volatile uint8_t buttonPressed = 0;
 volatile uint32_t timerCounter = 0;
-uint16_t num = 0;
+
 #define ADC_MAX_VALUE 4096
 
 
@@ -63,7 +63,6 @@ uint8_t ParseMessage(Message *msg) {
 			//reset num
 			if(msg->type == 'R'){
 				play =0;
-              num =0;
 			}
 			//wrong, need to resent form mcu to pc
 			else if(msg->type ==  'W'){
@@ -191,10 +190,10 @@ void PORTC_IRQHandler(void)
             buttonPressed = 0;
             if (timerCounter < 2)
             {
-				num++;
+
 				char buffer[8];
 				//Create message for navigate
-				Message a = createMessage('A',num);
+				Message a = createMessage('A',1);
 				//Convert message to string
 				messageToHexString(&a,buffer);
 				//Send message to PC
@@ -225,10 +224,10 @@ void PORTC_IRQHandler(void)
             buttonPressed = 0;
             if (timerCounter < 2)
             {
-                num--;
+
                 char buffer[8];
                 //Create message for navigate
-                Message a = createMessage('A',num);
+                Message a = createMessage('A',0);
                 //Convert message to string
                 messageToHexString(&a,buffer);
                 //Send message to PC
@@ -250,7 +249,7 @@ void LPIT0_Ch0_IRQHandler(void) {
     if (timerCounter >= 2)
     {
         if (PTC->PDIR & (1 << 12))
-        {
+        {	//declare buffer to store string
         	char buffer[8];
         	//Create message for select
 			Message a = createMessage('S',0);
