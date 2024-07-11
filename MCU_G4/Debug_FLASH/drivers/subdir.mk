@@ -6,16 +6,19 @@
 C_SRCS += \
 ../drivers/Driver_ADC.c \
 ../drivers/Driver_GPIO.c \
+../drivers/Driver_LPIT.c \
 ../drivers/Driver_UART.c 
 
 OBJS += \
 ./drivers/Driver_ADC.o \
 ./drivers/Driver_GPIO.o \
+./drivers/Driver_LPIT.o \
 ./drivers/Driver_UART.o 
 
 C_DEPS += \
 ./drivers/Driver_ADC.d \
 ./drivers/Driver_GPIO.d \
+./drivers/Driver_LPIT.d \
 ./drivers/Driver_UART.d 
 
 

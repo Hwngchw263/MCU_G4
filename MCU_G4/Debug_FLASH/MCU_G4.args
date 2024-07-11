@@ -1,5 +1,5 @@
 -T
-"C:/S32DS_WS/MCU_G4/Project_Settings/Linker_Files/S32K144_64_flash.ld"
+"D:/pm_vscode/repo_mcu/MCU_G4/MCU_G4/MCU_G4/Project_Settings/Linker_Files/S32K144_64_flash.ld"
 -Wl,-Map,"MCU_G4.map"
 -Xlinker
 --gc-sections
@@ -14,6 +14,7 @@
 "./core/Core_Systick.o"
 "./drivers/Driver_ADC.o"
 "./drivers/Driver_GPIO.o"
+"./drivers/Driver_LPIT.o"
 "./drivers/Driver_UART.o"
 "./middleware/Middleware.o"
 "./src/Message.o"

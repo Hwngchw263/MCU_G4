@@ -208,7 +208,7 @@ static int32_t GPIO_SetEventTrigger (ARM_GPIO_Pin_t pin, ARM_GPIO_EVENT_TRIGGER 
     	  base->PCR[pin_num] |= PORT_PCR_IRQC(0x0A);
         break;
       case ARM_GPIO_TRIGGER_EITHER_EDGE:
-    	  base->PCR[pin_num] |= PORT_PCR_IRQC(1u << 2);
+    	  base->PCR[pin_num] |= PORT_PCR_IRQC(0x0B);
         break;
       default:
         result = ARM_DRIVER_ERROR_PARAMETER;

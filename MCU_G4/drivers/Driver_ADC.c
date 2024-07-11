@@ -38,13 +38,12 @@ void ADC_Init(ADC_Type*ADCn, Input_chanel_t channel)
 	ADCn->SC2    |= ADC_SC2_ADTRG(0);
 	ADCn->SC3    |= (ADC_SC3_AVGE_MASK | ADC_SC3_CAL_MASK | ADC_SC3_ADCO_MASK | ADC_SC3_AVGS(0));
 
-	/*Enable NVIC*/
 	if(ADCn == ADC0)
-	{
-		NVIC_EnableIRQ(ADC0_IRQn);
-	}else{
-		NVIC_EnableIRQ(ADC1_IRQn);
-	}
+		{
+			NVIC_EnableIRQ(ADC0_IRQn);
+		}else{
+			NVIC_EnableIRQ(ADC1_IRQn);
+		}
 
 	ADCn->SC1[0] |= ADC_SC1_AIEN(1);
 	ADCn->SC1[0] &= ~ADC_SC1_ADCH_MASK; // Disable to config

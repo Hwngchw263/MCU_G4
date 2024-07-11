@@ -9,7 +9,10 @@ typedef enum{
 	LPIT_TIMER_CHANNEL2 = 2,
 	LPIT_TIMER_CHANNEL3 = 3,
 } Lpit_timer_t;
-void Timer_Init(Lpit_timer_t channel);
+
+
+
+void LPIT_Timer_Init(Lpit_timer_t channel);
 void Reset_timer_value(Lpit_timer_t channel,uint32_t value);
 void Start_timer(Lpit_timer_t channel);
 void Stop_timer(Lpit_timer_t channel);

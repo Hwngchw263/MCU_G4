@@ -13,7 +13,7 @@
 #include "Core_NVIC.h"
 #include "Driver_ADC.h"
 #include "Core_Systick.h"
-
+#include "Driver_LPIT.h"
 extern ARM_DRIVER_GPIO Driver_GPIO;
 static ARM_DRIVER_GPIO * GPIO_drv = &Driver_GPIO;
 #define RED_LED					111

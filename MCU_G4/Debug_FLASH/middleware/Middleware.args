@@ -1,8 +1,8 @@
 -DCPU_S32K144HFT0VLLT
--I"C:/S32DS_WS/MCU_G4/include"
--I"C:/S32DS_WS/MCU_G4/core"
--I"C:/S32DS_WS/MCU_G4/drivers"
--I"C:/S32DS_WS/MCU_G4/middleware"
+-I"D:/pm_vscode/repo_mcu/MCU_G4/MCU_G4/MCU_G4/include"
+-I"D:/pm_vscode/repo_mcu/MCU_G4/MCU_G4/MCU_G4/core"
+-I"D:/pm_vscode/repo_mcu/MCU_G4/MCU_G4/MCU_G4/drivers"
+-I"D:/pm_vscode/repo_mcu/MCU_G4/MCU_G4/MCU_G4/middleware"
 -O0
 -g3
 -Wall

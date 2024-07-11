@@ -141,7 +141,7 @@ void ADC0_IRQHandler(void)
 		//Parse and send message to PC
 		if (volume_value >= (previous_volume_value + PERCENT_THRESHOLD)) {
 			//Buffer to save string message
-			char buffer[8];
+			char buffer[9];
 			//Create message for volume
 			Message a = createMessage('V',volume_value);
 			//Convert message to string
@@ -149,24 +149,38 @@ void ADC0_IRQHandler(void)
 			//Send message to PC
 			UART1_SendString(buffer);
 			//save previous string
-			memcpy(temp_str,buffer,8);
-			memcpy(temp_str_volume,buffer,8);
+//			memcpy(temp_str,buffer,8);
+//			memcpy(temp_str_volume,buffer,8);
+
+			for( int id = 0; id < 9; id++){
+				temp_str[id] = buffer[id];
+				temp_str_volume[id] = buffer[id];
+			}
+			//temp_str[id] = '\0';
+		    //temp_str_volume[id] = '\0';
 
 			//Save previous value
 			previous_volume_value = volume_value;
 			}
 		else if (volume_value <= (previous_volume_value - PERCENT_THRESHOLD)) {
 			//Buffer to save string message
-			char buffer[8];
+			char buffer[9];
 			//Create message for volume
 			Message a = createMessage('V',volume_value);
 			//Convert message to string
 			messageToHexString(&a,buffer);
 			//Send message to PC
 			UART1_SendString(buffer);
-			memcpy(temp_str,buffer,8);
-			memcpy(temp_str_volume,buffer,8);
+			//memcpy(temp_str,buffer,8);
+			//memcpy(temp_str_volume,buffer,8);
 			//Save previous value
+
+			for(int id = 0; id < 9; id++){
+				temp_str[id] = buffer[id];
+				temp_str_volume[id] = buffer[id];
+			}
+			//temp_str[id] = '\0';
+			//temp_str_volume[id] = '\0';
 			previous_volume_value = volume_value;
 			}
 		}
@@ -191,7 +205,7 @@ void PORTC_IRQHandler(void)
             if (timerCounter < 2)
             {
 
-				char buffer[8];
+				char buffer[9];
 				//Create message for navigate
 				Message a = createMessage('A',1);
 				//Convert message to string
@@ -199,7 +213,11 @@ void PORTC_IRQHandler(void)
 				//Send message to PC
 				UART1_SendString(buffer);
 				//Save old string
-				memcpy(temp_str,buffer,8);
+
+				for(int id = 0; id < 9; id++){
+					temp_str[id] = buffer[id];
+				}
+				//temp_str[id] = '\0';
             }
 			Stop_timer(LPIT_TIMER_CHANNEL0)	;
 			//LPIT0->TMR[0].TCTRL &= ~LPIT_TMR_TCTRL_T_EN_MASK; // Disable timer
@@ -223,7 +241,7 @@ void PORTC_IRQHandler(void)
             if (timerCounter < 2)
             {
 
-                char buffer[8];
+                char buffer[9];
                 //Create message for navigate
                 Message a = createMessage('A',0);
                 //Convert message to string
@@ -231,7 +249,11 @@ void PORTC_IRQHandler(void)
                 //Send message to PC
                 UART1_SendString(buffer);
                 //Save old string
-                memcpy(temp_str,buffer,8);
+
+				for(int id = 0; id < 9; id++){
+					temp_str[id] = buffer[id];
+				}
+				//temp_str[id] = '\0';
             }
 			Stop_timer(LPIT_TIMER_CHANNEL0)	;
 			//LPIT0->TMR[0].TCTRL &= ~LPIT_TMR_TCTRL_T_EN_MASK; // Disable timer
@@ -246,7 +268,7 @@ void LPIT0_Ch0_IRQHandler(void) {
     {
         if (PTC->PDIR & (1 << 12))
         {	//declare buffer to store string
-        	char buffer[8];
+        	char buffer[9];
         	//Create message for select
 			Message a = createMessage('S',0);
 			//Convert message to string
@@ -254,12 +276,17 @@ void LPIT0_Ch0_IRQHandler(void) {
 			//Send message to PC
 			UART1_SendString(buffer);
 			//Save old string
-			memcpy(temp_str,buffer,8);
+			//memcpy(temp_str,buffer,8);
+			//use for 
+			for(int id = 0; id < 9; id++){
+				temp_str[id] = buffer[id];
+			}
+			//temp_str[id] = '\0';
         }
     	PORTC->ISFR |= (1 << 12);
         if (PTC->PDIR & (1 << 13))
         {
-        	char buffer[8];
+        	char buffer[9];
         	//Create message for select
 			Message a = createMessage('B',0);
 			//Convert message to string
@@ -267,7 +294,13 @@ void LPIT0_Ch0_IRQHandler(void) {
 			//Send message to PC
 			UART1_SendString(buffer);
 			//Save old string
-			memcpy(temp_str,buffer,8);
+
+			for(int id = 0; id < 9; id++){
+				temp_str[id] = buffer[id];
+				
+			}
+			//'temp_str[id] = '\0';
+			//memcpy(temp_str,buffer,8);
         }
     	PORTC->ISFR |= (1 << 13);
         buttonPressed = 1;

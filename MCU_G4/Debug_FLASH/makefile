@@ -33,7 +33,7 @@ MCU_G4.siz \
 all: MCU_G4.elf secondary-outputs
 
 # Tool invocations
-MCU_G4.elf: $(OBJS) C:/S32DS_WS/MCU_G4/Project_Settings/Linker_Files/S32K144_64_flash.ld $(USER_OBJS)
+MCU_G4.elf: $(OBJS) D:/pm_vscode/repo_mcu/MCU_G4/MCU_G4/MCU_G4/Project_Settings/Linker_Files/S32K144_64_flash.ld $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Standard S32DS C Linker'
 	arm-none-eabi-gcc -o "MCU_G4.elf" "@MCU_G4.args"  $(USER_OBJS)

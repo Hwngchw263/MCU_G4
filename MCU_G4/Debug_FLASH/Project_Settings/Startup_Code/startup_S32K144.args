@@ -1,5 +1,5 @@
 -c
--I"C:/S32DS_WS/MCU_G4/include"
+-I"D:/pm_vscode/repo_mcu/MCU_G4/MCU_G4/MCU_G4/include"
 -x assembler-with-cpp
 -DSTART_FROM_FLASH
 -g3

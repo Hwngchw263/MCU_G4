@@ -1,7 +1,7 @@
 #include "Driver_LPIT.h"
 #include "Core_NVIC.h"
 
-void Timer_Init(Lpit_timer_t channel){
+void LPIT_Timer_Init(Lpit_timer_t channel){
 	PCC->PCCn[PCC_LPIT_INDEX] &= ~PCC_PCCn_CGC(1u);
 	SCG->FIRCCSR &= ~SCG_FIRCCSR_FIRCEN_MASK;
 	SCG->FIRCDIV |= SCG_FIRCDIV_FIRCDIV2(1);
