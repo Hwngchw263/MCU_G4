@@ -17,7 +17,8 @@ uint16_t previous_volume_value = 0;
 //store string
 char p[8];
 //store the last send string when "WRONG"
-char temp_str[8];
+char temp_str[9];
+char temp_str_volume[9];
 
 //index for p[10]
 uint8_t i = 0;
@@ -62,7 +63,8 @@ uint8_t ParseMessage(Message *msg) {
 		if(msg->checksum == checksumstr){
 			//reset num
 			if(msg->type == 'R'){
-				play =0;
+				play = 0;
+				UART1_SendString(temp_str_volume);
 			}
 			//wrong, need to resent form mcu to pc
 			else if(msg->type ==  'W'){
@@ -147,9 +149,8 @@ void ADC0_IRQHandler(void)
 			//Send message to PC
 			UART1_SendString(buffer);
 			//save previous string
-			for(int id = 0; id < 8; id++){
-				temp_str[id] = buffer[id];
-			}
+			memcpy(temp_str,buffer,8);
+			memcpy(temp_str_volume,buffer,8);
 
 			//Save previous value
 			previous_volume_value = volume_value;
@@ -163,9 +164,8 @@ void ADC0_IRQHandler(void)
 			messageToHexString(&a,buffer);
 			//Send message to PC
 			UART1_SendString(buffer);
-			for(int id = 0; id < 8; id++){
-				temp_str[id] = buffer[id];
-			}
+			memcpy(temp_str,buffer,8);
+			memcpy(temp_str_volume,buffer,8);
 			//Save previous value
 			previous_volume_value = volume_value;
 			}
@@ -199,9 +199,7 @@ void PORTC_IRQHandler(void)
 				//Send message to PC
 				UART1_SendString(buffer);
 				//Save old string
-				for(int id = 0; id < 8; id++){
-					temp_str[id] = buffer[id];
-				}
+				memcpy(temp_str,buffer,8);
             }
 			Stop_timer(LPIT_TIMER_CHANNEL0)	;
 			//LPIT0->TMR[0].TCTRL &= ~LPIT_TMR_TCTRL_T_EN_MASK; // Disable timer
@@ -233,9 +231,7 @@ void PORTC_IRQHandler(void)
                 //Send message to PC
                 UART1_SendString(buffer);
                 //Save old string
-                for(int id = 0; id < 8; id++){
-					temp_str[id] = buffer[id];
-				}
+                memcpy(temp_str,buffer,8);
             }
 			Stop_timer(LPIT_TIMER_CHANNEL0)	;
 			//LPIT0->TMR[0].TCTRL &= ~LPIT_TMR_TCTRL_T_EN_MASK; // Disable timer
@@ -258,9 +254,7 @@ void LPIT0_Ch0_IRQHandler(void) {
 			//Send message to PC
 			UART1_SendString(buffer);
 			//Save old string
-			for(int id = 0; id < 8; id++){
-				temp_str[id] = buffer[id];
-			}
+			memcpy(temp_str,buffer,8);
         }
     	PORTC->ISFR |= (1 << 12);
         if (PTC->PDIR & (1 << 13))
@@ -273,9 +267,7 @@ void LPIT0_Ch0_IRQHandler(void) {
 			//Send message to PC
 			UART1_SendString(buffer);
 			//Save old string
-			for(int id = 0; id < 8; id++){
-				temp_str[id] = buffer[id];
-			}
+			memcpy(temp_str,buffer,8);
         }
     	PORTC->ISFR |= (1 << 13);
         buttonPressed = 1;
@@ -300,6 +292,7 @@ int main(void) {
 	Button_Init();
 	LPIT_Timer_Init(LPIT_TIMER_CHANNEL0);
 	ADC_Init(ADC0,External_Chanel12);
+
 	while(1){
 		if(messageReceived){
 			receiveAndProcessMessage();
