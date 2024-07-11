@@ -18,7 +18,7 @@ uint8_t calculateChecksum( uint16_t data) {
 	//data_low
 	uint8_t data_low = data & 0xFF;
 	uint8_t sum= data_high + data_low;
-	return ~sum +1;
+	return ~sum+1;
 }
 // Function to convert one byte to a hexadecimal string
 void byteToHexStr(uint8_t value, char *str) {
@@ -81,10 +81,4 @@ uint32_t StrtoHex(char* ptr, uint8_t len)
     return Hex_num;
 }
 // Function to verify message
-bool VerifyMessage(Message* msg){
-    uint8_t check = msg->checksum;
-    if(check == calculateChecksum(msg->data)){
-        return true;
-    }
-    return false;
-}
+
